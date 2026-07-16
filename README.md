@@ -534,7 +534,9 @@ The Pagefind provider loads `/pagefind/pagefind-ui.css` and `/pagefind/pagefind-
 
 ## 🧾 Latest Changes
 
-`v1.0.0` includes:
+`v1.0.1` includes the stable Termfolio release plus a patch release from the corrected mainline state after the `v1.0.0` tag/merge mismatch.
+
+The stable release includes:
 
 * standalone Termfolio split as a Hugo theme
 * terminal-inspired layout and file-list navigation

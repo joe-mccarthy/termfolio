@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-07-16
+
+### Fixed
+
+- Prepared a patch release from the corrected mainline state after the `v1.0.0` tag/merge mismatch.
+- Updated release-facing documentation to point at `v1.0.1` as the latest release.
+
 ## [1.0.0] - 2026-07-16
 
 ### Added
