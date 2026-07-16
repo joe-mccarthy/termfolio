@@ -162,6 +162,11 @@ summary:focus-visible {
   white-space: nowrap;
 }
 
+.console-prompt-icon {
+  margin-right: 0.35ch;
+  color: var(--accentcolor);
+}
+
 .site-header {
   padding-top: 1rem;
 }
@@ -190,8 +195,9 @@ summary:focus-visible {
   background: var(--accentcolor);
 }
 
-.nav-separator {
-  color: var(--mutedcolor);
+.nav-link:hover .console-prompt-icon,
+.nav-link[aria-current="page"] .console-prompt-icon {
+  color: currentColor;
 }
 
 header hr,
@@ -297,13 +303,13 @@ article {
 }
 
 .content h2::before {
-  content: "# ";
+  content: "$ ";
   color: var(--accentcolor);
 }
 
 .content h3::before {
-  content: "## ";
-  color: var(--mutedcolor);
+  content: "$ ";
+  color: var(--accentcolor);
 }
 
 .content p,
@@ -382,14 +388,14 @@ footer {
 .terms-list a {
   display: grid;
   width: 100%;
-  grid-template-columns: 10ch minmax(18rem, 1fr) auto;
+  grid-template-columns: 2ch minmax(18rem, 1fr) auto;
   gap: 0.75rem;
   align-items: baseline;
 }
 
 .terms-list a::before {
-  color: var(--mutedcolor);
-  content: "drwxr-xr-x";
+  color: var(--accentcolor);
+  content: "$";
 }
 
 .terms-list span {
