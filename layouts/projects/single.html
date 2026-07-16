@@ -1,0 +1,50 @@
+{{ define "main" }}
+  {{ $pages := where .Site.RegularPages.ByWeight "Section" "projects" }}
+  <main>
+    <article class="project project-readme">
+      <p class="section-command" aria-hidden="true">$ cat {{ .File.Path }}</p>
+      <h1 class="title">{{ .Title }}</h1>
+      {{ with .Params.subtitle }}<h3 class="subtitle">{{ . }}</h3>{{ end }}
+      <header class="project-readme-header">
+        <dl class="project-detail-meta">
+          {{ if not .Date.IsZero }}<div><dt>updated</dt><dd>{{ .Date.Format "2006-01-02" }}</dd></div>{{ end }}
+          {{ with .Params.status }}<div><dt>status</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{ with .Params.projectType }}<div><dt>type</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{ with .Params.role }}<div><dt>role</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{ with .Params.impact }}<div><dt>impact</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{ with .Params.stack }}<div><dt>stack</dt><dd>{{ delimit . " / " }}</dd></div>{{ end }}
+          {{ with .Params.license }}<div><dt>license</dt><dd>{{ . }}</dd></div>{{ end }}
+        </dl>
+        <ul class="project-actions project-detail-actions">
+          {{ with .Params.repo }}<li><a href="{{ . }}">git remote -v</a></li>{{ end }}
+          {{ with .Params.demo }}<li><a href="{{ . }}">make demo</a></li>{{ end }}
+        </ul>
+      </header>
+      <div class="content">{{ .Content }}</div>
+    </article>
+  </main>
+
+  {{ if ne .Site.Params.post_nav.enabled false }}
+    {{ $showTitle := .Site.Params.post_nav.show_title }}
+    <nav class="post-nav" aria-label="Project navigation">
+      <div class="post-nav-left">
+        {{ with $pages.Next . }}
+          {{ if $showTitle }}
+            <a href="{{ .RelPermalink }}">&#8612; {{ .Title }}</a>
+          {{ else }}
+            <a href="{{ .RelPermalink }}">&#8612; Previous Project</a>
+          {{ end }}
+        {{ end }}
+      </div>
+      <div class="post-nav-right">
+        {{ with $pages.Prev . }}
+          {{ if $showTitle }}
+            <a href="{{ .RelPermalink }}">{{ .Title }} &#8614;</a>
+          {{ else }}
+            <a href="{{ .RelPermalink }}">Next Project &#8614;</a>
+          {{ end }}
+        {{ end }}
+      </div>
+    </nav>
+  {{ end }}
+{{ end }}

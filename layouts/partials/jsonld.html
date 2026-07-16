@@ -1,0 +1,26 @@
+{{ if .IsPage }}
+  {{ $author := .Params.author | default .Site.Params.author | default .Site.Title }}
+  {{ $image := partial "seo-image.html" . }}
+  {{ $schemaType := cond (eq .Section "posts") "BlogPosting" "Article" }}
+  {{ $data := dict
+    "@context" "https://schema.org"
+    "@type" $schemaType
+    "headline" .Title
+    "author" (dict "@type" "Person" "name" $author)
+    "publisher" (dict "@type" "Organization" "name" .Site.Title)
+    "mainEntityOfPage" .Permalink
+  }}
+  {{ if not .Date.IsZero }}
+    {{ $data = merge $data (dict "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")) }}
+  {{ end }}
+  {{ if not .Lastmod.IsZero }}
+    {{ $data = merge $data (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")) }}
+  {{ end }}
+  {{ with .Description | default .Summary }}
+    {{ $data = merge $data (dict "description" (. | plainify | htmlUnescape | chomp)) }}
+  {{ end }}
+  {{ with $image }}
+    {{ $data = merge $data (dict "image" (. | absURL)) }}
+  {{ end }}
+  <script type="application/ld+json">{{ $data | jsonify | safeJS }}</script>
+{{ end }}

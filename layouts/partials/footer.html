@@ -1,0 +1,48 @@
+<footer>
+  <hr />
+  {{ if .Site.Params.social }}
+    <p id="social">
+      network interfaces:
+      <br />
+      {{ range $i, $e := .Site.Params.social }}
+        {{ $url := .url }}
+        {{ $isExternal := or (hasPrefix $url "http://") (hasPrefix $url "https://") }}
+        {{ $href := $url }}
+        {{ if not $isExternal }}
+          {{ $href = replaceRE "^/" "" $url | relURL }}
+        {{ end }}
+        {{ if $i }} | {{ end }}
+        <a href="{{ $href }}"{{ if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .name }}</a>
+      {{ end }}
+    </p>
+  {{ end }}
+  <p class="copyright">
+    copyleft © {{ now.Format "2006"}}
+    <a href="{{ .Site.Home.RelPermalink }}"><strong>{{ default "Blog Author" .Site.Params.author }}</strong></a>.
+    {{ if .Site.Params.license }}
+    {{ $licenseURL := .Site.Params.license.url }}
+    {{ $isExternalLicense := or (hasPrefix $licenseURL "http://") (hasPrefix $licenseURL "https://") }}
+    {{ $licenseHref := $licenseURL }}
+    {{ if not $isExternalLicense }}
+      {{ $licenseHref = replaceRE "^/" "" $licenseURL | relURL }}
+    {{ end }}
+    This work is licensed under the
+    <a href="{{ $licenseHref }}"{{ if $isExternalLicense }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Site.Params.license.name }}</a> license.
+    {{ end }}
+  </p>
+  {{ with .Site.Params.sourceURL }}
+    {{ $sourceURL := . }}
+    {{ $isExternalSource := or (hasPrefix $sourceURL "http://") (hasPrefix $sourceURL "https://") }}
+    <p class="source-line">
+      <span aria-hidden="true">$ git clone </span><a href="{{ $sourceURL }}"{{ if $isExternalSource }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ $sourceURL }}</a>
+    </p>
+  {{ end }}
+  {{ if ne .Site.Params.display.footerAttribution false }}
+    <p class="builtWith">
+      Built with
+      <a href="https://gohugo.io/">Hugo</a>,
+      using the <a href="https://github.com/joe-mccarthy/termfolio">Termfolio</a> theme.
+    </p>
+  {{ end }}
+  {{ partial "blank_footer.html" . }}
+</footer>

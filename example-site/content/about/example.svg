@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">Termfolio example image</title>
+  <desc id="desc">A simple local illustration used by the example site.</desc>
+  <rect width="960" height="480" fill="#fefefe"/>
+  <path d="M0 360h960v120H0z" fill="#d7e8df"/>
+  <path d="M0 320l160-90 120 60 120-130 160 120 110-80 290 120v160H0z" fill="#8fb9a8"/>
+  <path d="M0 340l170-80 130 75 140-100 130 80 150-95 240 110v150H0z" fill="#386f64"/>
+  <circle cx="735" cy="115" r="54" fill="#f3c969"/>
+  <path d="M116 116h288v22H116zM116 164h420v22H116zM116 212h330v22H116z" fill="#2b2b2b"/>
+</svg>

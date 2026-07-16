@@ -1,0 +1,19 @@
+<div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>{{ .Date.Format (default "2006-01-02 15:04:05" .Site.Params.dateFmt) }}</time>
+    {{ if ne .Site.Params.display.taxonomyMeta false }}
+      {{ with .GetTerms "categories" }}<span>in</span>{{ end }}
+      {{ partial "taxonomyLinks.html" (.GetTerms "categories") }}
+    {{ end }}
+  </strong>
+  {{ if and .IsPage (ne .Date .Lastmod) }}
+    <div>
+      Last updated on
+      <time>{{ .Lastmod.Format (default "2006-01-02 15:04:05" .Site.Params.dateFmt) }}</time>
+    </div>
+  {{ end }}
+  {{ if ne .Site.Params.display.taxonomyMeta false }}
+    {{ partial "postMetaTaxonomyRows.html" . }}
+  {{ end }}
+</div>

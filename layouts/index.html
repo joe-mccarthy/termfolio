@@ -1,0 +1,11 @@
+{{ define "main" }}
+	<main class="home-index">
+		{{ $mainSections := .Site.Params.mainSections | default (slice "posts") }}
+		{{ $pages := where .Site.RegularPages "Type" "in" $mainSections }}
+		{{ $paginator := .Paginate ($pages.ByDate.Reverse) }}
+		{{ range $paginator.Pages }}
+			{{ .Render "summary" }}
+		{{ end }}
+		{{ partial "pagination.html" . }}
+	</main>
+{{ end }}

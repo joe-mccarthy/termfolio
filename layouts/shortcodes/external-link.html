@@ -1,0 +1,12 @@
+{{- $href := .Get "href" -}}
+{{- if not $href -}}
+  {{- errorf "external-link shortcode requires an href value in %s" .Position -}}
+{{- end -}}
+{{- $text := .Get "text" | default $href -}}
+{{- $hasScheme := gt (len (findRE "^[a-zA-Z][a-zA-Z0-9+.-]*:" $href)) 0 -}}
+{{- $isHTTP := or (hasPrefix $href "http://") (hasPrefix $href "https://") -}}
+{{- $isRelative := and (not $hasScheme) (not (hasPrefix $href "//")) -}}
+{{- if not (or $isHTTP $isRelative) -}}
+  {{- errorf "external-link shortcode only supports http(s) or relative URLs, got %q in %s" $href .Position -}}
+{{- end -}}
+<a href="{{ $href }}"{{ if $isHTTP }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ $text }}</a>{{- "" -}}

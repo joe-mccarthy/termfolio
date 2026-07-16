@@ -1,0 +1,15 @@
+{{ define "main" }}
+	<main>
+    {{ $isAbout := eq .RelPermalink "/about/" }}
+    {{ with .File }}
+      {{ if eq .Path "about/index.md" }}{{ $isAbout = true }}{{ end }}
+    {{ end }}
+    {{ if $isAbout }}
+      <p class="section-command" aria-hidden="true">$ whoami</p>
+    {{ else }}
+      <p class="section-command" aria-hidden="true">$ less {{ .File.Path | default .RelPermalink }}</p>
+    {{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+	</main>
+{{ end }}

@@ -1,0 +1,14 @@
+<article class="summary">
+  <p class="summary-path" aria-hidden="true">$ less {{ .File.Path | default .RelPermalink }}</p>
+  <a href="{{ .RelPermalink }}">
+    <h2 class="title">{{ .Title }}</h2>
+    {{ with .Params.subtitle }}<h3 class="subtitle">{{ . }}</h3>{{ end }}
+  </a>
+  {{ partial "postMeta.html" . }}
+  <div class="content">
+    {{ .Summary }}
+    {{ if .Truncated }}
+      <a href="{{ .RelPermalink }}">less {{ .File.Path | default .RelPermalink }}</a>
+    {{ end }}
+  </div>
+</article>

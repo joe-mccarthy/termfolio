@@ -1,0 +1,14 @@
+<p class="section-command" aria-hidden="true">$ ls -la ./{{ .Data.Plural }}/</p>
+{{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+<ul class="terms-list">
+  {{ range $term := .Data.Terms.ByCount }}
+    {{ with $term.Page }}
+      <li class="term">
+        <a href="{{ .RelPermalink }}">
+          <span>{{ .LinkTitle }}</span>
+          <span>({{ $term.Count }})</span>
+        </a>
+      </li>
+    {{ end }}
+  {{ end }}
+</ul>

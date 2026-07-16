@@ -1,0 +1,88 @@
+baseURL: https://example.org/
+languageCode: en-gb
+title: Site Title
+theme: termfolio
+
+pagination.pagerSize: 10
+
+markup:
+  highlight:
+    noClasses: false
+
+menu:
+  main:
+  - identifier: home
+    name: Home
+    url: /
+    weight: 1
+  - identifier: about
+    name: About
+    url: /about/
+    weight: 2
+  - identifier: posts
+    name: Posts
+    url: /posts/
+    weight: 3
+  - identifier: projects
+    name: Projects
+    url: /projects/
+    weight: 4
+  - identifier: categories
+    name: Categories
+    url: /categories/
+    weight: 5
+  - identifier: tags
+    name: Tags
+    url: /tags/
+    weight: 6
+  - identifier: series
+    name: Series
+    url: /series/
+    weight: 7
+  - identifier: search
+    name: Search
+    url: /search/
+    weight: 8
+
+params:
+  author: Blog Author
+  description: "This is the example site description. From Configuration"
+  sourceURL: https://github.com/joe-mccarthy/termfolio
+  images:
+  - android-chrome-512x512.png
+  mainSections:
+  - posts
+  style:
+    maxWidth: 820px
+    accentColor: "#386f64"
+    darkAccentColor: "#9cd4c2"
+  display:
+    footerAttribution: true
+    taxonomyMeta: true
+  toc:
+    enabled: true
+    title: Contents
+  search:
+    enabled: true
+    provider: simple
+  latest:
+    enabled: true
+    count: 3
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/#main-content-marker
+  abbrDateFmt: "01/02"
+  dateFmt: "06/01/02"
+  social:
+  - name: GitHub
+    url: https://github.com/joe-mccarthy/termfolio
+  - name: "RSS"
+    url: index.xml
+  post_nav:
+    enabled: true
+    show_title: false
+
+taxonomies:
+  tag: tags
+  category: categories
+  series: series

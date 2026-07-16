@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Page bundle diagram</title>
+  <desc id="desc">A simple diagram showing markdown, local assets, and rendered HTML.</desc>
+  <rect width="1200" height="675" fill="#eef5f2"/>
+  <rect x="94" y="92" width="300" height="420" rx="16" fill="#fff" stroke="#bfd3cc" stroke-width="3"/>
+  <rect x="450" y="92" width="300" height="420" rx="16" fill="#fff" stroke="#bfd3cc" stroke-width="3"/>
+  <rect x="806" y="92" width="300" height="420" rx="16" fill="#fff" stroke="#bfd3cc" stroke-width="3"/>
+  <text x="142" y="160" fill="#386f64" font-family="monospace" font-size="32" font-weight="700">Markdown</text>
+  <text x="514" y="160" fill="#386f64" font-family="monospace" font-size="32" font-weight="700">Assets</text>
+  <text x="870" y="160" fill="#386f64" font-family="monospace" font-size="32" font-weight="700">HTML</text>
+  <rect x="142" y="220" width="204" height="16" rx="8" fill="#8bb7aa"/>
+  <rect x="142" y="264" width="168" height="16" rx="8" fill="#bfd3cc"/>
+  <rect x="142" y="308" width="224" height="16" rx="8" fill="#bfd3cc"/>
+  <rect x="516" y="222" width="168" height="118" rx="12" fill="#e8f1ee" stroke="#bfd3cc" stroke-width="3"/>
+  <circle cx="600" cy="281" r="34" fill="#386f64"/>
+  <rect x="854" y="220" width="204" height="16" rx="8" fill="#8bb7aa"/>
+  <rect x="854" y="264" width="168" height="16" rx="8" fill="#bfd3cc"/>
+  <rect x="854" y="320" width="204" height="90" rx="12" fill="#e8f1ee" stroke="#bfd3cc" stroke-width="3"/>
+  <path d="M396 302h50m304 0h50" fill="none" stroke="#386f64" stroke-width="10" stroke-linecap="round"/>
+  <path d="M430 282l22 20-22 20m354-40l22 20-22 20" fill="none" stroke="#386f64" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

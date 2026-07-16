@@ -1,0 +1,188 @@
+{{ define "main" }}
+  <main id="search">
+    <p class="section-command" aria-hidden="true">$ grep -R --line-number .</p>
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+    {{ if .Site.Params.search.enabled }}
+      {{ $provider := default "simple" .Site.Params.search.provider }}
+      {{ if eq $provider "pagefind" }}
+        <div id="search-ui"></div>
+        <link href="{{ "pagefind/pagefind-ui.css" | relURL }}" rel="stylesheet">
+        <script src="{{ "pagefind/pagefind-ui.js" | relURL }}"></script>
+        <script>
+          globalThis.addEventListener("DOMContentLoaded", function () {
+            globalThis.pagefindUI = new globalThis.PagefindUI({ element: "#search-ui", showSubResults: true });
+          });
+        </script>
+      {{ else }}
+        {{ $items := slice }}
+        {{ range .Site.RegularPages }}
+          {{ if and (ne .RelPermalink $.RelPermalink) (not .Params.searchExclude) }}
+            {{ $terms := slice }}
+            {{ range .GetTerms "tags" }}
+              {{ $terms = $terms | append .LinkTitle }}
+            {{ end }}
+            {{ range .GetTerms "categories" }}
+              {{ $terms = $terms | append .LinkTitle }}
+            {{ end }}
+            {{ $summary := .Description }}
+            {{ if not $summary }}
+              {{ $summary = .Summary | plainify | htmlUnescape }}
+            {{ end }}
+            {{ $content := .Plain | plainify | htmlUnescape }}
+            {{ $date := "" }}
+            {{ if not .Date.IsZero }}
+              {{ $date = .Date.Format (default "2006-01-02" .Site.Params.dateFmt) }}
+            {{ end }}
+            {{ $items = $items | append (dict "title" .Title "url" .RelPermalink "date" $date "summary" $summary "terms" $terms "content" $content) }}
+          {{ end }}
+        {{ end }}
+        <form id="site-search" class="site-search" role="search">
+          <label class="visually-hidden" for="search-query">Search this site</label>
+          <input id="search-query" type="search" name="q" autocomplete="off" placeholder="grep posts pages projects">
+          <button type="submit">grep</button>
+        </form>
+        <p id="search-status" class="search-status" aria-live="polite"></p>
+        <ol id="search-results" class="search-results"></ol>
+        <script id="search-index" type="application/json">{{ $items | jsonify | safeJS }}</script>
+        <script>
+          (function () {
+            var indexElement = document.getElementById("search-index");
+            var form = document.getElementById("site-search");
+            var input = document.getElementById("search-query");
+            var status = document.getElementById("search-status");
+            var results = document.getElementById("search-results");
+
+            if (!indexElement || !form || !input || !status || !results) {
+              return;
+            }
+
+            var entries = JSON.parse(indexElement.textContent || "[]").map(function (entry) {
+              var terms = entry.terms || [];
+              return {
+                title: entry.title || "",
+                url: entry.url || "#",
+                date: entry.date || "",
+                summary: entry.summary || "",
+                terms: terms,
+                content: entry.content || "",
+                haystack: [
+                  entry.title,
+                  entry.summary,
+                  terms.join(" "),
+                  entry.content
+                ].join(" ").toLowerCase()
+              };
+            });
+
+            function getScore(entry, words) {
+              var score = 0;
+              var title = entry.title.toLowerCase();
+              var summary = entry.summary.toLowerCase();
+              var terms = entry.terms.join(" ").toLowerCase();
+
+              for (var word of words) {
+                if (!entry.haystack.includes(word)) {
+                  return 0;
+                }
+
+                score += 1;
+                if (title.includes(word)) {
+                  score += 6;
+                }
+                if (terms.includes(word)) {
+                  score += 4;
+                }
+                if (summary.includes(word)) {
+                  score += 2;
+                }
+              }
+
+              return score;
+            }
+
+            function render(matches, query) {
+              results.textContent = "";
+
+              if (query.length < 2) {
+                status.textContent = "grep: query must be at least 2 characters";
+                return;
+              }
+
+              if (!matches.length) {
+                status.textContent = 'grep: no matches for "' + query + '"';
+                return;
+              }
+
+              status.textContent = matches.length + (matches.length === 1 ? " match" : " matches");
+              var fragment = document.createDocumentFragment();
+
+              matches.forEach(function (match) {
+                var entry = match.entry;
+                var meta = [entry.date].concat(entry.terms).filter(Boolean).join(" - ");
+                var item = document.createElement("li");
+                var link = document.createElement("a");
+
+                link.href = entry.url;
+                link.textContent = entry.title;
+                item.appendChild(link);
+
+                if (meta) {
+                  var metaElement = document.createElement("p");
+                  metaElement.className = "search-result-meta";
+                  metaElement.textContent = meta;
+                  item.appendChild(metaElement);
+                }
+
+                if (entry.summary) {
+                  var summaryElement = document.createElement("p");
+                  summaryElement.textContent = entry.summary;
+                  item.appendChild(summaryElement);
+                }
+
+                fragment.appendChild(item);
+              });
+
+              results.appendChild(fragment);
+            }
+
+            function runSearch() {
+              var query = input.value.trim().toLowerCase();
+              var words = query.split(/\s+/).filter(Boolean);
+
+              if (query.length < 2) {
+                render([], query);
+                return;
+              }
+
+              var matches = entries.map(function (entry) {
+                return {
+                  entry: entry,
+                  score: getScore(entry, words)
+                };
+              }).filter(function (match) {
+                return match.score > 0;
+              }).sort(function (left, right) {
+                return right.score - left.score || left.entry.title.localeCompare(right.entry.title);
+              }).slice(0, 20);
+
+              render(matches, query);
+            }
+
+            form.addEventListener("submit", function (event) {
+              event.preventDefault();
+              runSearch();
+            });
+            input.addEventListener("input", runSearch);
+
+            var queryParam = new URLSearchParams(globalThis.location.search).get("q");
+            if (queryParam) {
+              input.value = queryParam;
+            }
+            runSearch();
+          })();
+        </script>
+      {{ end }}
+    {{ end }}
+  </main>
+{{ end }}

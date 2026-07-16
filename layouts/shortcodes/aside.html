@@ -1,0 +1,5 @@
+{{ $type := .Get "type" | default "note" }}
+<aside class="shortcode-aside shortcode-aside-{{ $type | urlize }}">
+  {{ with .Get "title" }}<strong>{{ . }}</strong>{{ end }}
+  {{ .Inner | markdownify }}
+</aside>

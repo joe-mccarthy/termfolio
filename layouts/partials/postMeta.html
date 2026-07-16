@@ -1,0 +1,12 @@
+<div class="post-meta">
+  <strong>
+    <time>{{ .Date.Format (default "2006-01-02" .Site.Params.dateFmt) }}</time>  
+  </strong>
+  {{ if ne .Site.Params.display.taxonomyMeta false }}
+    {{ with .GetTerms "categories" }}
+      <span><strong>in</strong></span>
+      {{ partial "taxonomyLinks.html" . }}
+    {{ end }}
+    {{ partial "postMetaTaxonomyRows.html" . }}
+  {{ end }}
+</div>

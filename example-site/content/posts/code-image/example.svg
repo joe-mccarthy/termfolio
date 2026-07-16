@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">Termfolio code image</title>
+  <desc id="desc">A simple local illustration used by the code and image example post.</desc>
+  <rect width="960" height="480" fill="#fefefe"/>
+  <rect x="64" y="58" width="832" height="364" rx="8" fill="#2b2b2b"/>
+  <path d="M64 94h832" stroke="#fefefe" stroke-opacity=".25" stroke-width="2"/>
+  <circle cx="100" cy="76" r="8" fill="#e66"/>
+  <circle cx="128" cy="76" r="8" fill="#f3c969"/>
+  <circle cx="156" cy="76" r="8" fill="#8fb9a8"/>
+  <path d="M120 146h180M120 194h300M120 242h236M120 290h360M120 338h210" stroke="#8fb9a8" stroke-linecap="round" stroke-width="18"/>
+  <path d="M552 146h154M552 194h240M552 242h180M552 290h260M552 338h144" stroke="#f3c969" stroke-linecap="round" stroke-width="18"/>
+</svg>

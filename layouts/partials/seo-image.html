@@ -1,0 +1,9 @@
+{{ $image := "" }}
+{{ with .Params.images }}
+  {{ $image = index . 0 }}
+{{ else }}
+  {{ with .Site.Params.images }}
+    {{ $image = index . 0 }}
+  {{ end }}
+{{ end }}
+{{ return $image }}

@@ -1,0 +1,24 @@
+{{ $showToc := false }}
+{{ with .Site.Params.toc }}
+  {{ if .enabled }}
+    {{ $showToc = true }}
+  {{ end }}
+{{ end }}
+{{ if eq .Params.toc false }}
+  {{ $showToc = false }}
+{{ else if eq .Params.toc true }}
+  {{ $showToc = true }}
+{{ end }}
+{{ $tocTitle := "Contents" }}
+{{ with .Site.Params.toc }}
+  {{ with .title }}
+    {{ $tocTitle = . }}
+  {{ end }}
+{{ end }}
+{{ $listItem := printf "<%s>" "li" }}
+{{ if and $showToc (in .TableOfContents $listItem) }}
+  <aside class="table-of-contents" aria-labelledby="toc-title">
+    <h2 id="toc-title">{{ $tocTitle }}</h2>
+    {{ .TableOfContents }}
+  </aside>
+{{ end }}

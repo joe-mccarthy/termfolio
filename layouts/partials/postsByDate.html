@@ -1,0 +1,14 @@
+{{ range .RegularPagesRecursive.GroupByDate "2006" }}
+  <h3>{{ .Key }}</h3>
+  <ul class="posts-by-date file-list">
+    {{ range .Pages }}
+      <li class="file-row">
+        <span class="file-date">{{ .Date.Format "2006-01-02" }}</span>
+        <span class="file-mode" aria-hidden="true">rw-r--r--</span>
+        <span class="file-title">
+          <a href="{{ .RelPermalink }}">{{.Title }}</a>
+        </span>
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}

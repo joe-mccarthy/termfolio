@@ -1,0 +1,4 @@
+{{ range $key, $value := . }}
+  {{- if $key }}, {{ end }}
+  <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+{{- end }}

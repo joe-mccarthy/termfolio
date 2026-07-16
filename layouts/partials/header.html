@@ -1,0 +1,24 @@
+<header class="site-header">
+  <div id="brand">
+    <span class="shell-prompt" aria-hidden="true">{{ default "guest@termfolio:~$" .Site.Params.prompt }}</span>
+    <a href="{{ .Site.Home.RelPermalink }}" class="site-title">{{ .Site.Title }}</a>
+  </div>
+  <nav class="site-nav" aria-label="Main navigation">
+    {{ $currentPage := . }}
+    {{ with .Site.Menus.main }}
+      {{ range $index, $value := . }}
+        {{ $menuURL := .URL }}
+        {{ $hasScheme := gt (len (findRE "^[a-zA-Z][a-zA-Z0-9+.-]*:" $menuURL)) 0 }}
+        {{ $isExternal := or $hasScheme (hasPrefix $menuURL "//") }}
+        {{ $href := $menuURL }}
+        {{ if not $isExternal }}{{ $href = $menuURL | relURL }}{{ end }}
+        {{ $active := or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}
+        {{ if and (not $active) (eq .Identifier "home") $currentPage.IsHome }}{{ $active = true }}{{ end }}
+        {{ if and (not $active) (not $isExternal) (ne .Identifier "home") (hasPrefix $currentPage.RelPermalink $href) }}{{ $active = true }}{{ end }}
+        {{ if $index }}<span class="nav-separator" aria-hidden="true">|</span>{{ end }}
+        <a class="nav-link" href="{{ $href }}"{{ if $active }} aria-current="page"{{ end }}><span aria-hidden="true">./</span>{{ .Name }}</a>
+      {{ end }}
+    {{ end }}
+  </nav>
+  <hr />
+</header>

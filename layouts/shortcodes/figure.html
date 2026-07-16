@@ -1,0 +1,31 @@
+{{ $src := .Get "src" }}
+{{ if not $src }}
+  {{ errorf "figure shortcode requires a src value in %s" .Position }}
+{{ end }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $caption := .Get "caption" }}
+{{ $link := .Get "link" }}
+{{ $srcHasScheme := gt (len (findRE "^[a-zA-Z][a-zA-Z0-9+.-]*:" $src)) 0 }}
+{{ $srcIsSafeScheme := or (not $srcHasScheme) (hasPrefix $src "http://") (hasPrefix $src "https://") }}
+{{ if or (not $srcIsSafeScheme) (hasPrefix $src "//") }}
+  {{ errorf "figure shortcode only supports http(s) or relative src URLs, got %q in %s" $src .Position }}
+{{ end }}
+{{ if hasPrefix $src "/" }}
+  {{ $src = replaceRE "^/" "" $src | relURL }}
+{{ end }}
+{{ if $link }}
+  {{ $linkHasScheme := gt (len (findRE "^[a-zA-Z][a-zA-Z0-9+.-]*:" $link)) 0 }}
+  {{ $linkIsSafeScheme := or (not $linkHasScheme) (hasPrefix $link "http://") (hasPrefix $link "https://") }}
+  {{ if or (not $linkIsSafeScheme) (hasPrefix $link "//") }}
+    {{ errorf "figure shortcode only supports http(s) or relative link URLs, got %q in %s" $link .Position }}
+  {{ end }}
+  {{ if hasPrefix $link "/" }}
+    {{ $link = replaceRE "^/" "" $link | relURL }}
+  {{ end }}
+{{ end }}
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
+  {{ if $link }}<a href="{{ $link | safeURL }}">{{ end }}
+    <img src="{{ $src | safeURL }}" alt="{{ $alt }}">
+  {{ if $link }}</a>{{ end }}
+  {{ with $caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

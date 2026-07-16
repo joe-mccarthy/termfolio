@@ -1,0 +1,50 @@
+{{ define "main" }}
+  {{ $projects := .Pages.ByWeight }}
+  {{ $paginator := .Paginate $projects }}
+  <main class="projects-index">
+    <header class="projects-hero">
+      <p class="section-command" aria-hidden="true">$ ls -la ./projects/</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.subtitle }}<p class="projects-lede">{{ . }}</p>{{ end }}
+      {{ with .Content }}<div class="content projects-intro">{{ . }}</div>{{ end }}
+    </header>
+
+    {{ if gt (len $paginator.Pages) 0 }}
+      <div class="project-grid">
+        {{ range $paginator.Pages }}
+          <article class="project-card">
+            <div class="project-card-header">
+              <span class="project-path">./{{ .File.Dir }}</span>
+              {{ with .Params.status }}<span class="project-status">{{ . }}</span>{{ end }}
+            </div>
+            <div class="project-card-body">
+              <h2 class="title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+              <p class="project-excerpt">{{ .Summary | plainify }}</p>
+              <dl class="project-meta">
+                {{ if not .Date.IsZero }}
+                  <div><dt>updated</dt><dd>{{ .Date.Format "2006-01-02" }}</dd></div>
+                {{ end }}
+                {{ with .Params.projectType }}
+                  <div><dt>type</dt><dd>{{ . }}</dd></div>
+                {{ end }}
+                {{ with .Params.stack }}
+                  <div><dt>lang</dt><dd>{{ index . 0 }}</dd></div>
+                  <div><dt>stack</dt><dd>{{ delimit . " / " }}</dd></div>
+                {{ end }}
+                {{ with .Params.license }}
+                  <div><dt>license</dt><dd>{{ . }}</dd></div>
+                {{ end }}
+              </dl>
+              <ul class="project-actions">
+                <li><a href="{{ .RelPermalink }}">cat README.md</a></li>
+                {{ with .Params.repo }}<li><a href="{{ . }}">git remote</a></li>{{ end }}
+                {{ with .Params.demo }}<li><a href="{{ . }}">run demo</a></li>{{ end }}
+              </ul>
+            </div>
+          </article>
+        {{ end }}
+      </div>
+      {{ partial "pagination.html" . }}
+    {{ end }}
+  </main>
+{{ end }}

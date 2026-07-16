@@ -1,0 +1,7 @@
+{{ define "main" }}
+  <main id="archive">
+    <p class="section-command" aria-hidden="true">$ find ./posts -type f</p>
+    {{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+    {{ partial "postsByDate.html" . }}
+  </main>
+{{ end }}

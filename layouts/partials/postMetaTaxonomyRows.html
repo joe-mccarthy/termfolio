@@ -1,0 +1,11 @@
+{{ $page := . }}
+{{ range slice (dict "taxonomy" "tags" "label" "Tags:") (dict "taxonomy" "series" "label" "Series:") }}
+  {{ $label := .label }}
+  {{ $terms := $page.GetTerms .taxonomy }}
+  {{ with $terms }}
+    <div>
+      <span>{{ $label }}</span>
+      {{ partial "taxonomyLinks.html" . }}
+    </div>
+  {{ end }}
+{{ end }}

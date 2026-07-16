@@ -1,0 +1,58 @@
+{{ define "main" }}
+  {{ $currentPage := . }}
+  <main>
+    <article>
+      <p class="section-command" aria-hidden="true">$ cat {{ .File.Path }}</p>
+      <h1 class="title">{{ .Title }}</h1>
+      {{ with .Params.subtitle }}<h3 class="subtitle">{{ . }}</h3>{{ end }}
+      {{ partial "postMetaDetailed.html" . }}
+      {{ partial "toc.html" . }}
+      <div class="content">{{ .Content }}</div>
+    </article>
+  </main>
+  
+
+  {{ $pages := where .Site.RegularPages.ByDate "Section" "posts" }}
+
+  {{ if .Site.Params.post_nav.enabled }}
+    {{ $showTitle := .Site.Params.post_nav.show_title }}
+    <nav class="post-nav" aria-label="Post navigation">
+      <div class="post-nav-left">
+        {{ with $pages.Next . }}
+          {{ if $showTitle }}
+            <a href="{{ .RelPermalink }}">&#8612; {{ .Title }}</a>
+          {{ else }}
+            <a href="{{ .RelPermalink }}">&#8612; Previous Post</a>
+          {{ end }}
+        {{ end }}
+      </div>
+      <div class="post-nav-right">
+        {{ with $pages.Prev . }}
+          {{ if $showTitle }}
+            <a href="{{ .RelPermalink }}">{{ .Title }} &#8614;</a>
+          {{ else }}
+            <a href="{{ .RelPermalink }}">Next Post &#8614;</a>
+          {{ end }}
+        {{ end }}
+      </div>
+    </nav>
+  {{ end }}
+
+  {{ with .Site.Params.latest }}
+    {{ if .enabled }}
+      {{ $mainSections := $currentPage.Site.Params.mainSections | default (slice "posts") }}
+      {{ $latestPages := where $currentPage.Site.RegularPages "Type" "in" $mainSections }}
+      {{ $latest := first (default 3 .count) (where $latestPages.ByDate.Reverse "RelPermalink" "!=" $currentPage.RelPermalink) }}
+      {{ if $latest }}
+        <aside>
+          <h3>$ tail -n {{ len $latest }} ./posts</h3>
+          <ul>
+            {{ range $latest }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+            {{ end }}
+          </ul>
+        </aside>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
