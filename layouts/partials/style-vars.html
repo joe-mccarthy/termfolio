@@ -2,30 +2,16 @@
   <style>
     :root {
       {{ with .maxWidth }}--maxwidth: {{ . }};{{ end }}
-      {{ with .bgColor }}--bgcolor: {{ . }};{{ end }}
-      {{ with .fontColor }}--fontcolor: {{ . }};{{ end }}
-      {{ with .mutedColor }}--mutedcolor: {{ . }};{{ end }}
-      {{ with .linkColor }}--linkcolor: {{ . }};{{ end }}
-      {{ with .visitedColor }}--visitedcolor: {{ . }};{{ end }}
-      {{ with .accentColor }}--accentcolor: {{ . }};{{ end }}
-      {{ with .borderColor }}--bordercolor: {{ . }};{{ end }}
-      {{ with .preColor }}--precolor: {{ . }};{{ end }}
-      {{ with .preBgColor }}--prebgcolor: {{ . }};{{ end }}
-      {{ with .codeBgColor }}--codebgcolor: {{ . }};{{ end }}
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        {{ with .darkBgColor }}--bgcolor: {{ . }};{{ end }}
-        {{ with .darkFontColor }}--fontcolor: {{ . }};{{ end }}
-        {{ with .darkMutedColor }}--mutedcolor: {{ . }};{{ end }}
-        {{ with .darkLinkColor }}--linkcolor: {{ . }};{{ end }}
-        {{ with .darkVisitedColor }}--visitedcolor: {{ . }};{{ end }}
-        {{ with .darkAccentColor }}--accentcolor: {{ . }};{{ end }}
-        {{ with .darkBorderColor }}--bordercolor: {{ . }};{{ end }}
-        {{ with .darkPreColor }}--precolor: {{ . }};{{ end }}
-        {{ with .darkPreBgColor }}--prebgcolor: {{ . }};{{ end }}
-        {{ with .darkCodeBgColor }}--codebgcolor: {{ . }};{{ end }}
-      }
+      {{ with .darkBgColor | default .bgColor }}--bgcolor: {{ . }};{{ end }}
+      {{ with .darkFontColor | default .fontColor }}--fontcolor: {{ . }};{{ end }}
+      {{ with .darkMutedColor | default .mutedColor }}--mutedcolor: {{ . }};{{ end }}
+      {{ with .darkLinkColor | default .linkColor }}--linkcolor: {{ . }};{{ end }}
+      {{ with .darkVisitedColor | default .visitedColor }}--visitedcolor: {{ . }};{{ end }}
+      {{ with .darkAccentColor | default .accentColor }}--accentcolor: {{ . }};{{ end }}
+      {{ with .darkBorderColor | default .borderColor }}--bordercolor: {{ . }};{{ end }}
+      {{ with .darkPreColor | default .preColor }}--precolor: {{ . }};{{ end }}
+      {{ with .darkPreBgColor | default .preBgColor }}--prebgcolor: {{ . }};{{ end }}
+      {{ with .darkCodeBgColor | default .codeBgColor }}--codebgcolor: {{ . }};{{ end }}
     }
   </style>
 {{ end }}

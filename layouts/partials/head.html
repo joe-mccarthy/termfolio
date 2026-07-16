@@ -70,7 +70,7 @@
   <link rel="mask-icon" href="{{ "safari-pinned-tab.svg" | relURL }}" color="#2b2b2b">
   {{ $themeColor := "#050705" }}
   {{ with .Site.Params.style }}
-    {{ with .bgColor }}{{ $themeColor = . }}{{ end }}
+    {{ with .darkBgColor | default .bgColor }}{{ $themeColor = . }}{{ end }}
   {{ end }}
   <meta name="theme-color" content="{{ $themeColor }}">
   {{ partial "jsonld.html" . }}

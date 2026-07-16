@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a problem with Termfolio.
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please include enough detail to reproduce the problem with the example site or a minimal Hugo site.
+  - type: input
+    id: hugo-version
+    attributes:
+      label: Hugo version
+      description: Run `hugo version` and paste the output.
+      placeholder: "hugo v0.131.0+extended ..."
+    validations:
+      required: true
+  - type: input
+    id: termfolio-version
+    attributes:
+      label: Termfolio version
+      description: Release tag, commit SHA, or branch.
+      placeholder: "v0.1.0 or main@abcdef"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include commands, config snippets, and content front matter if relevant.
+      placeholder: |
+        1. Create a site with ...
+        2. Set ...
+        3. Run ...
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or output
+      description: Add screenshots, terminal output, or rendered HTML if useful.
+    validations:
+      required: false

@@ -46,7 +46,7 @@ menu:
 
 params:
   author: Blog Author
-  description: "This is the example site description. From Configuration"
+  description: "A short description for metadata and social previews."
   sourceURL: https://github.com/joe-mccarthy/termfolio
   images:
   - android-chrome-512x512.png
@@ -54,8 +54,7 @@ params:
   - posts
   style:
     maxWidth: 820px
-    accentColor: "#386f64"
-    darkAccentColor: "#9cd4c2"
+    accentColor: "#9cd4c2"
   display:
     footerAttribution: true
     taxonomyMeta: true

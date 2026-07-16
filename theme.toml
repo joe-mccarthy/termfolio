@@ -1,13 +1,14 @@
 # theme.toml template for a Hugo theme
-# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+# See https://github.com/gohugoio/hugoThemesSiteBuilder for current theme gallery metadata.
 
 name = "termfolio"
 license = "MIT"
 licenselink = "https://github.com/joe-mccarthy/termfolio/blob/main/LICENSE"
-description = "Terminal-inspired Hugo theme for blogs and portfolios with bundled JetBrains Mono, no tracking, and no runtime external dependencies"
+description = "Dark terminal-inspired Hugo theme for technical blogs, project portfolios, and repo-style personal sites with no tracking and no JavaScript by default"
 homepage = "https://github.com/joe-mccarthy/termfolio"
-tags = ["blog", "portfolio", "terminal", "monospace", "projects", "minimal", "responsive", "fast", "no-js", "no-tracking", "privacy", "accessibility", "seo"]
-features = ["blog", "projects", "taxonomies", "dark mode", "post navigation", "table of contents", "shortcodes", "json-ld", "open graph", "pagefind search"]
+demosite = "https://joe-mccarthy.github.io/termfolio/"
+tags = ["blog", "portfolio", "terminal", "monospace", "projects", "personal-site", "technical-writing", "minimal", "fast", "no-js", "no-tracking", "privacy", "accessibility", "seo"]
+features = ["blog", "projects", "taxonomies", "dark-only", "post navigation", "table of contents", "shortcodes", "json-ld", "open graph", "static search", "pagefind search"]
 min_version = "0.128.0"
 
 [author]

@@ -1,5 +1,5 @@
 ---
 title: Home Page
 draft: false
-summary: Welcome to the example site. This is the home page.
+summary: Explore Termfolio's terminal-inspired posts, projects, metadata, and search defaults.
 ---

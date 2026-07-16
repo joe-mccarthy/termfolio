@@ -11,4 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Termfolio split as a standalone Hugo theme.
 - Terminal-inspired layout, file-list navigation, repo-style project pages, static search support, SEO metadata, and bundled JetBrains Mono assets.
+- README walkthrough GIF, screenshots, and adoption-focused quick start documentation.
+- Hugo Themes gallery assets and submission checklist.
+- GitHub issue templates for bugs, feature requests, and showcase submissions.
+- Release checklist for screenshot, GIF, and gallery metadata updates.
 
+### Changed
+
+- Simplified the theme to a dark-only palette.
+- Updated example-site copy to describe Termfolio more clearly.

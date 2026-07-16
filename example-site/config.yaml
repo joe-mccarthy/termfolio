@@ -46,7 +46,7 @@ menu:
 
 params:
   author: Joe McCarthy
-  description: "This is the example site description. From Configuration"
+  description: "A terminal-inspired Hugo theme demo for blogs, project indexes, and portfolio pages."
   sourceURL: https://github.com/joe-mccarthy/termfolio
   images:
   - android-chrome-512x512.png
@@ -64,16 +64,6 @@ params:
     preColor: "#eaffdf"
     preBgColor: "#020402"
     codeBgColor: "#111a13"
-    darkBgColor: "#050705"
-    darkFontColor: "#d8f8d0"
-    darkMutedColor: "#83a38c"
-    darkLinkColor: "#75d7ff"
-    darkVisitedColor: "#d7a8ff"
-    darkAccentColor: "#9bf870"
-    darkBorderColor: "#2d4a34"
-    darkPreColor: "#eaffdf"
-    darkPreBgColor: "#020402"
-    darkCodeBgColor: "#111a13"
   display:
     footerAttribution: true
     taxonomyMeta: true

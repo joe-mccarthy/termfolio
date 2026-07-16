@@ -31,7 +31,7 @@
 }
 
 :root {
-  color-scheme: dark light;
+  color-scheme: dark;
   --bgcolor: #050705;
   --panelcolor: #0a0f0b;
   --fontcolor: #d8f8d0;
@@ -47,23 +47,6 @@
   --fontfamily: "JetBrains Mono", monospace;
   --maxwidth: 1040px;
   --radius: 2px;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bgcolor: #f1f4e7;
-    --panelcolor: #fbfff3;
-    --fontcolor: #172116;
-    --mutedcolor: #526650;
-    --linkcolor: #005f87;
-    --visitedcolor: #5f3b7a;
-    --accentcolor: #1d7f3f;
-    --accent2color: #8a5a00;
-    --bordercolor: #96aa8d;
-    --precolor: #eaffdf;
-    --prebgcolor: #071009;
-    --codebgcolor: #e6eddc;
-  }
 }
 
 * {
