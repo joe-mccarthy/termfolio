@@ -12,7 +12,7 @@ Use this before creating a GitHub release.
 
 - [ ] Update `CHANGELOG.md`.
 - [ ] Update `README.md` if installation, configuration, screenshots, or behavior changed.
-- [ ] Verify README images use absolute raw GitHub URLs.
+- [ ] Verify README images render in GitHub's README view.
 - [ ] Verify `theme.toml` and `hugo.toml` match the supported Hugo version.
 
 ## Media

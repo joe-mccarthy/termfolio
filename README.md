@@ -4,7 +4,7 @@ A dark, terminal-inspired Hugo theme for technical blogs, project portfolios, an
 
 Termfolio makes a static site feel like a browsable working directory: shell prompts, file-list navigation, project metadata, readable prose, local fonts, and privacy-first defaults.
 
-![Termfolio example site walkthrough](https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/termfolio-example.gif)
+![Termfolio example site walkthrough](static/images/termfolio-example.gif)
 
 The walkthrough shows list pages, project cards, code-heavy writing, and static search without loading third-party runtime assets.
 
@@ -37,11 +37,11 @@ Termfolio is built for people who want a personal site that feels technical, fas
 
 | Home | Post |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/home.png" alt="Termfolio homepage screenshot" width="420"> | <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/post.png" alt="Termfolio post screenshot" width="420"> |
+| <img src="static/images/screenshots/home.png" alt="Termfolio homepage screenshot" width="420"> | <img src="static/images/screenshots/post.png" alt="Termfolio post screenshot" width="420"> |
 
 | Projects | Search |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/projects.png" alt="Termfolio projects screenshot" width="420"> | <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/search.png" alt="Termfolio search screenshot" width="420"> |
+| <img src="static/images/screenshots/projects.png" alt="Termfolio projects screenshot" width="420"> | <img src="static/images/screenshots/search.png" alt="Termfolio search screenshot" width="420"> |
 
 ## ✅ Requirements
 
@@ -583,7 +583,7 @@ This repository includes the files expected by the Hugo Themes gallery:
 * `hugo.toml` with the supported Hugo version range.
 * `images/screenshot.png` at `1500x1000`.
 * `images/tn.png` at `900x600`.
-* README images use absolute raw GitHub URLs so they can render on the Hugo Themes site.
+* README images are kept repo-relative for GitHub readability. Convert them to raw absolute URLs before opening a Hugo Themes submission PR if the gallery preview requires it.
 
 See [docs/hugo-themes-submission.md](docs/hugo-themes-submission.md) for the submission checklist. To submit Termfolio, add `github.com/joe-mccarthy/termfolio` to `themes.txt` in the Hugo Themes Site Builder repository and open a pull request.
 
