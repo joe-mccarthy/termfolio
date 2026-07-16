@@ -1,5 +1,6 @@
 # Termfolio 🖥️
 
+
 A dark, terminal-inspired Hugo theme for technical blogs, project portfolios, and repo-style personal sites.
 
 Termfolio makes a static site feel like a browsable working directory: shell prompts, file-list navigation, project metadata, readable prose, local fonts, and privacy-first defaults.
