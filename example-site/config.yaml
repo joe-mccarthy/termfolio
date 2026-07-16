@@ -53,7 +53,7 @@ params:
   mainSections:
   - posts
   style:
-    maxWidth: 1060px
+    maxWidth: 1200px
     bgColor: "#050705"
     fontColor: "#d8f8d0"
     mutedColor: "#83a38c"

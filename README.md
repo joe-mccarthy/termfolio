@@ -330,7 +330,7 @@ Termfolio ships layouts for categories, tags, and series. Add custom taxonomy la
 | `params.prompt` | Shell prompt text in the site header. |
 | `params.sourceURL` | Repository/source link shown in the footer. |
 | `params.mainSections` | Content sections shown on index-style lists. |
-| `params.style.maxWidth` | Main layout width, such as `820px` or `1060px`. |
+| `params.style.maxWidth` | Main layout width, such as `820px` or `1200px`. |
 | `params.style.accentColor` | Primary accent color for links, prompts, and active states. |
 | `params.customStylesheets` | Extra site CSS files loaded after the theme stylesheet. |
 | `params.display.footerAttribution` | Shows or hides the Hugo/Termfolio footer attribution. |
@@ -374,7 +374,7 @@ params:
 ```yaml
 params:
   style:
-    maxWidth: 1060px
+    maxWidth: 1200px
     bgColor: "#050705"
     fontColor: "#d8f8d0"
     mutedColor: "#83a38c"
