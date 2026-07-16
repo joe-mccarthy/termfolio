@@ -20,7 +20,7 @@ https://github.com/gohugoio/hugoThemesSiteBuilder
 - [x] `images/screenshot.png` is at least `1500x1000`.
 - [x] `images/tn.png` uses a 3:2 aspect ratio.
 - [x] `images/tn.png` is at least `900x600`.
-- [ ] Convert README image paths from repo-relative paths to absolute raw GitHub URLs before opening the Hugo Themes submission PR, if the gallery preview requires it.
+- [x] Additional README media is stored in the repository under `static/images/`.
 
 ## Metadata
 
@@ -37,11 +37,10 @@ https://github.com/gohugoio/hugoThemesSiteBuilder
 ## Submission Steps
 
 1. Fork `github.com/gohugoio/hugoThemesSiteBuilder`.
-2. Convert README image paths to absolute raw GitHub URLs if needed for the gallery preview.
-3. Add `github.com/joe-mccarthy/termfolio` to `themes.txt` in lexicographical order.
-4. Use a commit message like `Add theme termfolio`.
-5. Open a pull request.
-6. Confirm the Netlify deploy preview succeeds.
+2. Add `github.com/joe-mccarthy/termfolio` to `themes.txt` in lexicographical order.
+3. Use a commit message like `Add theme termfolio`.
+4. Open a pull request.
+5. Confirm the Netlify deploy preview succeeds.
 
 ## Release Note
 

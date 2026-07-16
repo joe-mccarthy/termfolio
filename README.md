@@ -581,9 +581,9 @@ This repository includes the files expected by the Hugo Themes gallery:
 
 * `theme.toml` metadata with `demosite`, tags, features, author, license, and Hugo version support.
 * `hugo.toml` with the supported Hugo version range.
-* `images/screenshot.png` at `1500x1000`.
-* `images/tn.png` at `900x600`.
-* README images are kept repo-relative for GitHub readability. Convert them to raw absolute URLs before opening a Hugo Themes submission PR if the gallery preview requires it.
+* `images/screenshot.png` at `1500x1000`, using the required 3:2 aspect ratio.
+* `images/tn.png` at `900x600`, using the required 3:2 aspect ratio.
+* Additional README media lives under `static/images/`.
 
 See [docs/hugo-themes-submission.md](docs/hugo-themes-submission.md) for the submission checklist. To submit Termfolio, add `github.com/joe-mccarthy/termfolio` to `themes.txt` in the Hugo Themes Site Builder repository and open a pull request.
 
