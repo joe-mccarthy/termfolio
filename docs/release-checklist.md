@@ -26,7 +26,8 @@ Use this before creating a GitHub release.
 
 ## GitHub Release
 
-- [ ] Create a semver tag such as `v0.1.0`.
+- [ ] Create a semver tag such as `v1.0.0-rc.1` for a release candidate or `v1.0.0` for the final release.
+- [ ] Confirm release candidate tags use `-rc.N`; the release workflow marks those as GitHub prereleases.
 - [ ] Attach or link the GIF and screenshot assets in the release notes when useful.
 - [ ] Confirm the generated release notes mention breaking changes, new features, and documentation updates.
 

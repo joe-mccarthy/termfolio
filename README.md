@@ -534,7 +534,7 @@ The Pagefind provider loads `/pagefind/pagefind-ui.css` and `/pagefind/pagefind-
 
 ## 🧾 Latest Changes
 
-Current unreleased work includes:
+`v1.0.0-rc.1` includes:
 
 * standalone Termfolio split as a Hugo theme
 * terminal-inspired layout and file-list navigation
@@ -542,6 +542,10 @@ Current unreleased work includes:
 * static search support
 * SEO/social metadata
 * bundled JetBrains Mono assets
+* README walkthrough GIF, screenshots, and adoption-focused quick start documentation
+* Hugo Themes gallery assets and submission checklist
+* GitHub issue templates for bugs, feature requests, and showcase submissions
+* dark-only palette simplification
 
 See [CHANGELOG.md](CHANGELOG.md) and the [Releases](https://github.com/joe-mccarthy/termfolio/releases) page for version history.
 
