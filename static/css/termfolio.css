@@ -406,6 +406,13 @@ footer {
   white-space: nowrap;
 }
 
+.term-description {
+  margin: 0.15rem 0 0 2.75ch;
+  color: var(--mutedcolor);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
 .file-list {
   display: grid;
   gap: 0.3rem;
