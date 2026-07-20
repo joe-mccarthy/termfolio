@@ -1,0 +1,21 @@
+{
+  "name": "termfolio-quality",
+  "private": true,
+  "description": "Development-only quality checks for the Termfolio Hugo theme.",
+  "engines": {
+    "node": "24.18.0",
+    "npm": "11.16.0"
+  },
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "check": "npm run lint:markdown && npm run check:links",
+    "check:links": "bash scripts/check-documentation-links.sh",
+    "lint:markdown": "markdownlint-cli2",
+    "test:accessibility": "bash scripts/test-accessibility.sh"
+  },
+  "devDependencies": {
+    "lighthouse": "13.4.1",
+    "markdown-link-check": "3.14.2",
+    "markdownlint-cli2": "0.23.1"
+  }
+}

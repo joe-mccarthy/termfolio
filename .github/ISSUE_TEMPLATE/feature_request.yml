@@ -1,9 +1,13 @@
 name: Feature request
-description: Suggest an improvement for Termfolio.
+description: Propose a focused improvement to Termfolio.
 title: "feature: "
 labels:
   - enhancement
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Explain the user need before prescribing an implementation. Substantial changes should be discussed before a pull request is opened.
   - type: textarea
     id: problem
     attributes:
@@ -12,25 +16,41 @@ body:
     validations:
       required: true
   - type: textarea
-    id: proposal
+    id: outcome
     attributes:
-      label: Proposed solution
-      description: Describe the behavior, config, layout, or documentation change you want.
+      label: Desired outcome
+      description: Describe observable behaviour that would address the problem.
     validations:
       required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: Describe a configuration, layout, documentation, or implementation approach if you have one.
+    validations:
+      required: false
   - type: textarea
     id: alternatives
     attributes:
       label: Alternatives considered
-      description: Mention workarounds or other approaches if you have tried them.
+      description: Mention workarounds or other approaches you evaluated.
+    validations:
+      required: false
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and impact
+      description: Note effects on existing sites, configuration, accessibility, privacy, performance, or supported Hugo versions.
     validations:
       required: false
   - type: checkboxes
     id: scope
     attributes:
-      label: Scope check
+      label: Scope checks
       options:
-        - label: This fits Termfolio's static, privacy-first, no-JavaScript-by-default direction.
+        - label: I searched open and closed issues for an existing proposal.
           required: true
-        - label: I can help test the change with a Hugo site or example content.
+        - label: This fits Termfolio's static, privacy-conscious, no-JavaScript-by-default direction.
+          required: true
+        - label: I can help test or document the change.
           required: false

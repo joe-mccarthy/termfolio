@@ -21,34 +21,49 @@ defaults:
 
 jobs:
   build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository
+      }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     permissions:
       contents: read
       pages: read
     env:
-      HUGO_VERSION: 0.128.0
+      HUGO_VERSION: "0.164.0"
 
     steps:
-      - name: Install Hugo CLI
-        run: |
-          wget -O "${{ runner.temp }}/hugo.deb" \
-            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
-          sudo dpkg -i "${{ runner.temp }}/hugo.deb"
-
-      - name: Checkout
+      - name: Checkout exact validated commit
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
-          submodules: recursive
-          fetch-depth: 0
+          fetch-depth: 1
+          persist-credentials: false
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Verify checked-out commit
+        env:
+          EXPECTED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: false
+
+      - name: Verify standard Hugo installation
+        run: |
+          version=$(hugo version)
+          [[ "$version" == *"v${HUGO_VERSION}"* ]]
+          [[ "$version" != *"+extended"* ]]
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
-
-      - name: Install Node.js dependencies
-        run: |
-          [[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true
 
       - name: Build with Hugo
         env:
@@ -58,6 +73,7 @@ jobs:
         run: |
           cd example-site
           hugo \
+            --cleanDestinationDir \
             --gc \
             --minify \
             --noBuildLock \
@@ -74,14 +90,15 @@ jobs:
           path: .public
 
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ needs.build.result == 'success' }}
     permissions:
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     needs: build
 
     steps:

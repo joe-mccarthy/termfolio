@@ -7,6 +7,10 @@ hugo_stats.json
 example-site/public/
 .public
 
+# Node-based quality tooling
+/node_modules/
+npm-debug.log*
+
 # Executable may be added to repository
 hugo.exe
 hugo.darwin
