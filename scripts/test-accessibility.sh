@@ -4,7 +4,9 @@ set -euo pipefail
 export LC_ALL=C
 
 fail() {
-  printf 'accessibility-test-error: %s\n' "$1" >&2
+  local message=$1
+
+  printf 'accessibility-test-error: %s\n' "$message" >&2
   exit 1
 }
 
