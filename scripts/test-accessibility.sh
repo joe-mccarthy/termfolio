@@ -8,23 +8,24 @@ fail() {
   exit 1
 }
 
-for required_command in curl jq mktemp node python3; do
+for required_command in curl grep hugo jq ln mkdir mktemp node python3; do
   command -v "$required_command" >/dev/null 2>&1 ||
     fail "required command is unavailable: $required_command"
 done
 
 script_directory=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 repository_root=$(cd -- "$script_directory/.." && pwd)
-public_dir="$repository_root/.public"
 lighthouse="$repository_root/node_modules/.bin/lighthouse"
 minimum_score=0.95
 server_port=${TERMFOLIO_A11Y_PORT:-4173}
 
-[[ -d "$public_dir" ]] || fail "rendered site is missing: $public_dir"
 [[ -x "$lighthouse" ]] || fail "Lighthouse is unavailable; run npm ci first"
 [[ "$server_port" =~ ^[0-9]+$ ]] || fail "server port must be numeric"
 
 test_root=$(mktemp -d "${TMPDIR:-/tmp}/termfolio-a11y.XXXXXX")
+public_dir="$test_root/public"
+server_origin="http://127.0.0.1:${server_port}"
+themes_dir="$test_root/themes"
 server_pid=
 cleanup() {
   if [[ -n "${server_pid:-}" ]]; then
@@ -37,6 +38,21 @@ cleanup() {
 }
 trap cleanup EXIT
 
+mkdir -p "$themes_dir"
+ln -s "$repository_root" "$themes_dir/termfolio"
+
+HUGO_CACHEDIR="$test_root/hugo-cache" hugo \
+  --source "$repository_root/example-site" \
+  --themesDir "$themes_dir" \
+  --theme termfolio \
+  --destination "$public_dir" \
+  --baseURL "$server_origin/" \
+  --cleanDestinationDir \
+  --gc \
+  --minify \
+  --noBuildLock \
+  --panicOnWarning
+
 python3 -m http.server "$server_port" \
   --bind 127.0.0.1 \
   --directory "$public_dir" \
@@ -45,14 +61,23 @@ server_pid=$!
 
 for _ in {1..20}; do
   if curl --fail --silent --show-error \
-    "http://127.0.0.1:${server_port}/" >/dev/null 2>&1; then
+    "$server_origin/" >/dev/null 2>&1; then
     break
   fi
   sleep 0.25
 done
 curl --fail --silent --show-error \
-  "http://127.0.0.1:${server_port}/" >/dev/null ||
+  "$server_origin/" >/dev/null ||
   fail "static server did not start on port $server_port"
+
+home_html="$test_root/home.html"
+curl --fail --silent --show-error "$server_origin/" >"$home_html" ||
+  fail "home route is unavailable"
+grep -Eq 'href="?/css/termfolio\.css"?' "$home_html" ||
+  fail "home route does not reference the served theme stylesheet"
+curl --fail --silent --show-error \
+  "$server_origin/css/termfolio.css" >/dev/null ||
+  fail "theme stylesheet is unavailable"
 
 routes=(
   home:/
@@ -66,8 +91,12 @@ for route_spec in "${routes[@]}"; do
   route=${route_spec#*:}
   report="$test_root/${name}.json"
 
+  curl --fail --silent --show-error \
+    "$server_origin${route}" >/dev/null ||
+    fail "audited route is unavailable: $route"
+
   "$lighthouse" \
-    "http://127.0.0.1:${server_port}${route}" \
+    "$server_origin${route}" \
     --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage" \
     --only-categories=accessibility \
     --output=json \

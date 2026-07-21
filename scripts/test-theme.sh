@@ -8,7 +8,7 @@ fail() {
   exit 1
 }
 
-for required_command in git grep hugo ln mktemp; do
+for required_command in cp git grep hugo ln mkdir mktemp mv sed; do
   command -v "$required_command" >/dev/null 2>&1 ||
     fail "required command is unavailable: $required_command"
 done
@@ -33,16 +33,34 @@ trap cleanup EXIT
 mkdir -p "$test_root/themes"
 ln -s "$repository_root" "$test_root/themes/termfolio"
 
+render_site() {
+  local source_dir=$1
+  local destination_dir=$2
+  local cache_dir=$3
+  local panic_on_warning=$4
+  local hugo_args=(
+    --source "$source_dir"
+    --themesDir "$test_root/themes"
+    --theme termfolio
+    --destination "$destination_dir"
+    --gc
+    --minify
+    --noBuildLock
+  )
+
+  if [[ "$panic_on_warning" == true ]]; then
+    hugo_args+=(--panicOnWarning)
+  fi
+
+  HUGO_CACHEDIR="$cache_dir" hugo "${hugo_args[@]}"
+}
+
 output_dir="$test_root/public"
-HUGO_CACHEDIR="$test_root/cache" hugo \
-  --source "$repository_root/example-site" \
-  --themesDir "$test_root/themes" \
-  --theme termfolio \
-  --destination "$output_dir" \
-  --gc \
-  --minify \
-  --noBuildLock \
-  --panicOnWarning
+render_site \
+  "$repository_root/example-site" \
+  "$output_dir" \
+  "$test_root/cache" \
+  true
 
 expected_routes=(
   404.html
@@ -74,5 +92,29 @@ grep -Fq 'Series: Theme Showcase' \
   fail 'series term did not use the taxonomy-term layout'
 grep -Fq 'Tag: Hugo' "$output_dir/tags/hugo/index.html" ||
   fail 'tag term did not use the taxonomy-term layout'
+
+legacy_source_dir="$test_root/legacy-site"
+legacy_output_dir="$test_root/legacy-public"
+legacy_config="$legacy_source_dir/config.yaml"
+cp -R "$repository_root/example-site" "$legacy_source_dir"
+sed 's/^defaultContentLanguage:/languageCode:/' \
+  "$legacy_config" >"$legacy_config.tmp"
+mv "$legacy_config.tmp" "$legacy_config"
+
+grep -Fq 'languageCode: en-gb' "$legacy_config" ||
+  fail 'legacy fixture does not declare languageCode="en-gb"'
+if grep -Eq '^defaultContentLanguage:' "$legacy_config"; then
+  fail 'legacy fixture still declares defaultContentLanguage'
+fi
+
+# Hugo 0.158.0 and newer warn about languageCode while loading configuration,
+# before the theme can render the compatible language value.
+render_site \
+  "$legacy_source_dir" \
+  "$legacy_output_dir" \
+  "$test_root/legacy-cache" \
+  false
+grep -Eq '<html lang="?en-gb"?' "$legacy_output_dir/index.html" ||
+  fail 'languageCode-only fixture does not declare lang="en-gb"'
 
 printf 'Verified Termfolio with %s\n' "$hugo_version"

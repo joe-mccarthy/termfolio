@@ -103,6 +103,8 @@ taxonomies:
 
 Replace example URLs, identity, licence, and social image values before publishing.
 
+Sites upgraded from an earlier Termfolio release may still use `languageCode`. Termfolio preserves that value for the rendered `<html lang>` attribute. Hugo 0.158.0 and newer deprecate `languageCode` while loading configuration, however, and `--panicOnWarning` turns that warning into a build failure. Replace it with `defaultContentLanguage` to keep one warning-free configuration across Termfolio's supported Hugo range.
+
 ## Navigation
 
 Termfolio renders Hugo's `main` menu in ascending `weight` order. Each item needs a stable `identifier`, a visible `name`, and a site-relative or absolute `url`.
@@ -249,7 +251,7 @@ Prefer small, documented overrides so future theme upgrades remain easy to revie
 | Theme is not loading | Confirm `theme: termfolio` and that the theme is present at `themes/termfolio`. |
 | Styles look incomplete | Confirm `static/css/termfolio.css` is being served and inspect custom CSS for conflicting overrides. |
 | Code highlighting looks plain | Set `markup.highlight.noClasses: false` so Hugo emits Chroma classes. |
-| Page language is incorrect | Set `defaultContentLanguage` to the site's primary BCP 47 language tag. |
+| Page language is incorrect, or Hugo warns about `languageCode` | Set `defaultContentLanguage` to the site's primary BCP 47 language tag and remove the legacy `languageCode` setting. |
 | Content is missing | Confirm pages are not drafts, or use `hugo server --buildDrafts` during development. |
 | Taxonomy routes are missing | Define the taxonomy under `taxonomies` and add terms to published content. |
 | Search page is blank | Confirm search is enabled, the page uses `layout: search`, and the selected provider has been built. |
