@@ -1,8 +1,6 @@
 name: Showcase site
-description: Share a public site using Termfolio.
+description: Share a public site that uses Termfolio.
 title: "showcase: "
-labels:
-  - showcase
 body:
   - type: input
     id: site-url
@@ -15,8 +13,16 @@ body:
     id: source-url
     attributes:
       label: Source URL
-      description: Optional public repository or source page.
+      description: Link an optional public repository or source page.
       placeholder: "https://github.com/user/site"
+    validations:
+      required: false
+  - type: input
+    id: termfolio-version
+    attributes:
+      label: Termfolio version
+      description: Provide the release tag or commit used by the site.
+      placeholder: "v1.0.0"
     validations:
       required: false
   - type: textarea
@@ -26,10 +32,17 @@ body:
       description: What kind of site is it, and how are you using Termfolio?
     validations:
       required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Optionally attach a representative screenshot.
+    validations:
+      required: false
   - type: checkboxes
     id: permission
     attributes:
       label: Permission
       options:
-        - label: Termfolio may list this site in the README or documentation.
+        - label: I am authorised to submit this site and Termfolio may link to it from project documentation.
           required: true

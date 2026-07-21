@@ -1,37 +1,62 @@
 # Release Checklist
 
-Use this before creating a GitHub release.
+Use this checklist to prepare and verify an exact Termfolio release candidate.
+The detailed policy is in [RELEASING.md](../RELEASING.md).
 
-## Build
+## Identity
 
-- [ ] Run `hugo --source example-site --themesDir ../.. --theme termfolio`.
-- [ ] Confirm the example site renders the home, posts, projects, taxonomies, and search pages.
-- [ ] Confirm `git diff --check` passes.
+- [ ] Confirm the repository, release unit, channel, version, and tag.
+- [ ] Record the exact 40-character candidate commit SHA on `main`.
+- [ ] Confirm the proposed tag is absent locally and on GitHub.
+- [ ] Confirm no GitHub Release exists for the proposed tag.
 
-## Documentation
+## Candidate validation
 
-- [ ] Update `CHANGELOG.md`.
-- [ ] Update `README.md` if installation, configuration, screenshots, or behavior changed.
-- [ ] Verify README images render in GitHub's README view.
-- [ ] Verify `theme.toml` and `hugo.toml` match the supported Hugo version.
+- [ ] Run `bash scripts/test-theme.sh` with the intended Hugo version.
+- [ ] Run `npm ci` followed by `npm run check`.
+- [ ] Run `shellcheck scripts/*.sh`.
+- [ ] Run `bash scripts/test-release-validator.sh`.
+- [ ] Run `git diff --check`.
+- [ ] Confirm required GitHub checks pass for the exact candidate commit.
+- [ ] Confirm home, posts, projects, taxonomies, search, and error pages render.
+- [ ] Confirm the supported standard Hugo versions build with warnings treated
+      as errors.
+
+## Documentation and release writing
+
+- [ ] Reconcile `README.md` and the detailed documentation with final behaviour.
+- [ ] Confirm `theme.toml` and `hugo.toml` declare the supported Hugo version.
+- [ ] Add `## [<version>] - YYYY-MM-DD` to `CHANGELOG.md`.
+- [ ] Commit approved notes as `release-notes/<tag>.md`.
+- [ ] Document compatibility, required actions, breaking changes, and known
+      issues accurately.
+- [ ] Confirm the notes and changelog describe only work in the candidate.
 
 ## Media
 
-- [ ] Regenerate `static/images/termfolio-example.gif` if the UI changed.
-- [ ] Regenerate `static/images/screenshots/home.png` if the home page changed.
-- [ ] Regenerate `static/images/screenshots/post.png` if post rendering changed.
-- [ ] Regenerate `static/images/screenshots/projects.png` if project rendering changed.
-- [ ] Regenerate `static/images/screenshots/search.png` if search rendering changed.
-- [ ] Regenerate `images/screenshot.png` and `images/tn.png` if the gallery preview changed.
+- [ ] Regenerate the walkthrough and README screenshots after visual changes.
+- [ ] Regenerate `images/screenshot.png` and `images/tn.png` after gallery-preview
+      changes.
+- [ ] Verify all committed images render in GitHub's README view.
 
-## GitHub Release
+## Publication approval
 
-- [ ] Create a semver tag such as `v1.0.0-rc.1` for a release candidate or `v1.0.0` for the final release.
-- [ ] Confirm release candidate tags use `-rc.N`; the release workflow marks those as GitHub prereleases.
-- [ ] Attach or link the GIF and screenshot assets in the release notes when useful.
-- [ ] Confirm the generated release notes mention breaking changes, new features, and documentation updates.
+- [ ] Review the final diff, checks, version map, notes, and expected assets.
+- [ ] Confirm the approved tag will be annotated and target the exact candidate.
+- [ ] Approve pushing only `refs/tags/<tag>`.
+- [ ] Do not create or edit the GitHub Release manually.
+
+## Independent verification
+
+- [ ] Confirm the public tag object and target commit.
+- [ ] Confirm the release status and committed release-note body.
+- [ ] Confirm GitHub's source ZIP and tar.gz archives are available.
+- [ ] Test the documented installation path from the published source.
+- [ ] Record the workflow and release URLs as evidence.
 
 ## Hugo Themes
 
-- [ ] If gallery assets or metadata changed, create a new release tag so the Hugo Themes builder can pick them up.
-- [ ] If this is the first public release, submit the theme to `gohugoio/hugoThemesSiteBuilder`.
+- [ ] Treat gallery submission as a separate action after the stable release is
+      verified.
+- [ ] Submit the theme to `gohugoio/hugoThemesSiteBuilder` if it is not listed.
+- [ ] Confirm the upstream preview succeeds before considering submission done.

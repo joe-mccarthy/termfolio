@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-07-21
+
+### Added
+
+- Added dedicated configuration, content-authoring, development, contribution, support, and release guides.
+- Added repeatable checks for supported Hugo versions, documentation, links, shell scripts, release-candidate invariants, and route-level accessibility.
+
+### Changed
+
+- Standardized copy-ready configuration on `defaultContentLanguage`; legacy `languageCode` values still render correctly, although Hugo 0.158.0 and newer emit a deprecation warning while loading configuration.
+- Hardened exact-commit example-site deployment and immutable annotated-tag GitHub Release automation.
+- Scoped repository permissions to the CI jobs that require them and disabled dependency lifecycle scripts during quality-tool installation.
+
+### Fixed
+
+- Made category, tag, and series indexes and individual term pages render consistently across supported Hugo versions.
+- Preserved configured page-language values in the rendered `<html lang>` attribute across Hugo's 0.158.0 language API change.
+- Made accessibility checks build and serve an isolated example site with verified routes and theme assets before Lighthouse runs.
+
 ## [1.0.1] - 2026-07-16
 
 ### Fixed

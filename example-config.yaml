@@ -1,5 +1,5 @@
 baseURL: https://example.org/
-languageCode: en-gb
+defaultContentLanguage: en-gb
 title: Site Title
 theme: termfolio
 

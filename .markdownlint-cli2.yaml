@@ -1,0 +1,18 @@
+config:
+  default: true
+  MD013: false
+  MD024:
+    siblings_only: true
+  MD033:
+    allowed_elements:
+      - a
+      - img
+  MD041: false
+gitignore: true
+globs:
+  - "*.md"
+  - ".github/**/*.md"
+  - "docs/**/*.md"
+  - "release-notes/**/*.md"
+noBanner: true
+noProgress: true

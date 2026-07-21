@@ -1,0 +1,59 @@
+name: Usage question
+description: Ask for help configuring or using Termfolio.
+title: "question: "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for Termfolio-specific help. General Hugo questions are better suited to the Hugo community support forum.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What are you trying to achieve, and where are you blocked?
+    validations:
+      required: true
+  - type: input
+    id: termfolio-version
+    attributes:
+      label: Termfolio version
+      description: Provide a release tag or commit SHA.
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: hugo-version
+    attributes:
+      label: Hugo version
+      description: Run `hugo version` and paste the complete output.
+      placeholder: "hugo v0.164.0 linux/amd64"
+    validations:
+      required: true
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Relevant configuration or content
+      description: Include the smallest non-sensitive configuration, front matter, or template excerpt needed to understand the question.
+      render: yaml
+    validations:
+      required: false
+  - type: textarea
+    id: attempts
+    attributes:
+      label: What have you tried?
+      description: Link the documentation you followed and describe the result.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I reviewed the README and relevant detailed guide.
+          required: true
+        - label: I searched existing issues for the same question.
+          required: true
+        - label: This question is specific to Termfolio rather than Hugo generally.
+          required: true

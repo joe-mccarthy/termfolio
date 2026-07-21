@@ -1,5 +1,5 @@
 baseURL: https://joe-mccarthy.github.io/termfolio/
-languageCode: en-gb
+defaultContentLanguage: en-gb
 title: Example Termfolio
 theme: ../.
 

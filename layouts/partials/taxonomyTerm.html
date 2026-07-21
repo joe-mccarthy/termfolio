@@ -1,0 +1,10 @@
+{{ $plural := .Data.Plural | default "terms" }}
+{{ $singular := .Data.Singular | default "term" }}
+{{ $labels := dict "categories" "Category" "series" "Series" "tags" "Tag" }}
+{{ $label := index $labels $plural | default $singular }}
+<main id="{{ $plural }}">
+  <p class="section-command" aria-hidden="true">$ find ./posts -type f -{{ $singular }} '{{ .Title | lower }}'</p>
+  {{ with .Title }}<h1>{{ $label }}: {{ . }}</h1>{{ end }}
+  {{ .Content }}
+  {{ partial "postsByDate.html" . }}
+</main>

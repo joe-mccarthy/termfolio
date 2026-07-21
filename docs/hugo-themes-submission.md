@@ -2,8 +2,9 @@
 
 Termfolio is prepared for submission to the Hugo Themes gallery.
 
-Source requirements checked against the current Hugo Themes Site Builder README:
-https://github.com/gohugoio/hugoThemesSiteBuilder
+Source requirements were checked against the
+[Hugo Themes Site Builder](https://github.com/gohugoio/hugoThemesSiteBuilder)
+documentation.
 
 ## Repository Files
 

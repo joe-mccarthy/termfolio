@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a problem with Termfolio.
+description: Report reproducible incorrect behaviour in Termfolio.
 title: "bug: "
 labels:
   - bug
@@ -7,34 +7,53 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting a bug. Please include enough detail to reproduce the problem with the example site or a minimal Hugo site.
-  - type: input
-    id: hugo-version
-    attributes:
-      label: Hugo version
-      description: Run `hugo version` and paste the output.
-      placeholder: "hugo v0.131.0+extended ..."
-    validations:
-      required: true
+        Thank you for reporting a problem. Search existing issues first and use the usage-question form when you need configuration help rather than reporting a defect.
   - type: input
     id: termfolio-version
     attributes:
       label: Termfolio version
-      description: Release tag, commit SHA, or branch.
-      placeholder: "v0.1.0 or main@abcdef"
+      description: Provide a release tag or full commit SHA.
+      placeholder: "v1.0.0 or a 40-character commit SHA"
+    validations:
+      required: true
+  - type: input
+    id: hugo-version
+    attributes:
+      label: Hugo version
+      description: Run `hugo version` and paste the complete output.
+      placeholder: "hugo v0.164.0 linux/amd64"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Include the operating system and browser when relevant.
+      placeholder: "Ubuntu 24.04; Firefox 140"
+    validations:
+      required: false
+  - type: dropdown
+    id: installation
+    attributes:
+      label: Installation method
+      options:
+        - Git submodule
+        - Release archive
+        - Local theme checkout
+        - Other
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected behavior
+      label: Expected behaviour
       description: What should have happened?
     validations:
       required: true
   - type: textarea
     id: actual
     attributes:
-      label: Actual behavior
+      label: Actual behaviour
       description: What happened instead?
     validations:
       required: true
@@ -42,17 +61,44 @@ body:
     id: reproduce
     attributes:
       label: Reproduction steps
-      description: Include commands, config snippets, and content front matter if relevant.
+      description: Include the smallest configuration, front matter, content, and commands needed to reproduce the problem.
       placeholder: |
         1. Create a site with ...
-        2. Set ...
+        2. Configure ...
         3. Run ...
     validations:
       required: true
+  - type: input
+    id: reproduction-url
+    attributes:
+      label: Minimal reproduction
+      description: Link to a small public repository or deployed page when available.
+      placeholder: "https://github.com/user/termfolio-reproduction"
+    validations:
+      required: false
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Paste warning-free terminal output or the exact error. Remove sensitive information first.
+      render: shell
+    validations:
+      required: false
   - type: textarea
     id: screenshots
     attributes:
-      label: Screenshots or output
-      description: Add screenshots, terminal output, or rendered HTML if useful.
+      label: Screenshots
+      description: Attach screenshots or rendered HTML when they help explain a visual problem.
     validations:
       required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched open and closed issues for this problem.
+          required: true
+        - label: I checked whether the problem occurs on the latest release or current `main`.
+          required: true
+        - label: I removed credentials, private content, and other sensitive information.
+          required: true

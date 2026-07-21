@@ -1,49 +1,184 @@
-name: Create Release
+name: publish-release
 
 on:
   push:
     tags:
-      - 'v*.*.*' # broad match; exact version format is validated below
+      - "v*"
+
+permissions: {}
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: publish-release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-
+  publish:
+    name: Publish GitHub Release
     permissions:
       contents: write
-      packages: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Check out exact release commit
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
+          fetch-tags: true
+          persist-credentials: false
+          ref: ${{ github.sha }}
 
-      - name: Validate tag format
-        env:
-          TAG: ${{ github.ref_name }}
+      - name: Check publication tooling
         run: |
-          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]; then
-            echo "Invalid release tag: $TAG"
-            echo "Expected one of:"
-            echo "  v1.2.3"
-            echo "  v1.2.3-rc.1"
-            exit 1
-          fi
+          for tool in git gh jq; do
+            command -v "$tool"
+          done
 
-      - name: Create GitHub release
+      - name: Validate release candidate
+        id: candidate
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.ref_name }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          args=(
+          candidate_json="$(
+            bash scripts/validate-release-candidate.sh \
+              --tag "$GITHUB_REF_NAME" \
+              --expected-sha "$GITHUB_SHA" \
+              --main-ref origin/main \
+              --repository "$GITHUB_REPOSITORY" \
+              --notes-dir release-notes \
+              --changelog CHANGELOG.md
+          )"
+
+          jq . <<<"$candidate_json"
+
+          {
+            printf 'tag=%s\n' \
+              "$(jq -r '.tag' <<<"$candidate_json")"
+            printf 'version=%s\n' \
+              "$(jq -r '.version' <<<"$candidate_json")"
+            printf 'channel=%s\n' \
+              "$(jq -r '.channel' <<<"$candidate_json")"
+            printf 'prerelease=%s\n' \
+              "$(jq -r '.prerelease' <<<"$candidate_json")"
+            printf 'tag_object_sha=%s\n' \
+              "$(jq -r '.tag_object_sha' <<<"$candidate_json")"
+            printf 'target_sha=%s\n' \
+              "$(jq -r '.target_sha' <<<"$candidate_json")"
+            printf 'notes_file=%s\n' \
+              "$(jq -r '.notes_file' <<<"$candidate_json")"
+          } >>"$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        id: create
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOTES_FILE: ${{ steps.candidate.outputs.notes_file }}
+          PRERELEASE: ${{ steps.candidate.outputs.prerelease }}
+          TAG: ${{ steps.candidate.outputs.tag }}
+        run: |
+          release_args=(
             "$TAG"
             --repo "$GITHUB_REPOSITORY"
-            --title "${TAG#v}"
-            --generate-notes
+            --verify-tag
+            --title "$TAG"
+            --notes-file "$NOTES_FILE"
           )
 
-          if [[ "$TAG" =~ -rc\.[0-9]+$ ]]; then
-            args+=(--prerelease)
+          if [[ "$PRERELEASE" == "true" ]]; then
+            release_args+=(--prerelease --latest=false)
+          else
+            release_args+=(--latest)
           fi
 
-          gh release create "${args[@]}"
+          release_url=$(gh release create "${release_args[@]}")
+          printf 'url=%s\n' "$release_url" >>"$GITHUB_OUTPUT"
+
+      - name: Verify publication postconditions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ steps.candidate.outputs.prerelease }}
+          TAG: ${{ steps.candidate.outputs.tag }}
+          TAG_OBJECT_SHA: ${{ steps.candidate.outputs.tag_object_sha }}
+          TARGET_SHA: ${{ steps.candidate.outputs.target_sha }}
+          VERSION: ${{ steps.candidate.outputs.version }}
+        run: |
+          release_json="$(
+            gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG"
+          )"
+          jq -e \
+            --arg tag "$TAG" \
+            --argjson prerelease "$PRERELEASE" \
+            '
+              .tag_name == $tag
+              and .draft == false
+              and .prerelease == $prerelease
+              and ((.html_url // "") | length > 0)
+              and ((.zipball_url // "") | length > 0)
+              and ((.tarball_url // "") | length > 0)
+            ' <<<"$release_json" >/dev/null
+
+          remote_ref_json="$(
+            gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG"
+          )"
+          jq -e \
+            --arg tag_object_sha "$TAG_OBJECT_SHA" \
+            '
+              .object.type == "tag"
+              and .object.sha == $tag_object_sha
+            ' <<<"$remote_ref_json" >/dev/null
+
+          remote_tag_json="$(
+            gh api \
+              "repos/$GITHUB_REPOSITORY/git/tags/$TAG_OBJECT_SHA"
+          )"
+          jq -e \
+            --arg target_sha "$TARGET_SHA" \
+            '
+              .object.type == "commit"
+              and .object.sha == $target_sha
+            ' <<<"$remote_tag_json" >/dev/null
+
+          release_url=$(jq -r '.html_url' <<<"$release_json")
+          {
+            printf '%s\n' "## Release published"
+            printf '\n'
+            printf '%s\n' "- Repository: $GITHUB_REPOSITORY"
+            printf '%s\n' "- Version: $VERSION"
+            printf '%s\n' "- Tag: $TAG"
+            printf '%s\n' "- Commit: $TARGET_SHA"
+            printf '%s\n' "- GitHub Release: $release_url"
+            printf '%s\n' \
+              "- Assets: GitHub source ZIP and tar.gz archives"
+          } >>"$GITHUB_STEP_SUMMARY"
+
+  report-failure:
+    name: Report publication failure
+    needs: publish
+    if: ${{ always() && needs.publish.result != 'success' }}
+    permissions: {}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Record safe recovery guidance
+        run: |
+          {
+            printf '%s\n' "## Release publication did not complete"
+            printf '\n'
+            printf '%s\n' "- Repository: $GITHUB_REPOSITORY"
+            printf '%s\n' "- Tag event: $GITHUB_REF_NAME"
+            printf '%s\n' "- Event commit: $GITHUB_SHA"
+            printf '\n'
+            printf '%s\n' \
+              "Inspect the failed step before taking corrective action."
+            printf '%s\n' \
+              "Do not delete, move, or reuse the published tag."
+            printf '%s\n' \
+              "If a release was created, treat it as partial publication."
+            printf '%s\n' \
+              "Use a new version for a corrective release when needed."
+          } >>"$GITHUB_STEP_SUMMARY"

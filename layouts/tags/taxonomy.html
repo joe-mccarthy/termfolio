@@ -1,8 +1,9 @@
 {{ define "main" }}
-  <main id="tags">
-    <p class="section-command" aria-hidden="true">$ find ./posts -type f -tag '{{ .Title | lower }}'</p>
-    {{ with .Title }}<h1>{{ "Tag: " }}{{ . }}</h1>{{ end }}
-    {{ .Content }}
-    {{ partial "postsByDate.html" . }}
-  </main>
+  {{ if eq .Kind "taxonomy" }}
+    <main id="terms">
+      {{ partial "terms.html" . }}
+    </main>
+  {{ else }}
+    {{ partial "taxonomyTerm.html" . }}
+  {{ end }}
 {{ end }}
