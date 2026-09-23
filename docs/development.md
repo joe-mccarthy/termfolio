@@ -71,7 +71,7 @@ bash scripts/test-theme.sh
 It builds into a temporary directory with warnings treated as errors, verifies key routes, and checks that category, tag, and series term layouts render correctly. Pass an expected version to guard the local toolchain:
 
 ```bash
-bash scripts/test-theme.sh 0.164.0
+bash scripts/test-theme.sh 0.166.0
 ```
 
 Install the pinned documentation tooling and run Markdown lint plus link checks:
@@ -112,7 +112,7 @@ The browser audit requires Chrome or Chromium and checks the home, posts, projec
 Continuous integration runs two standard Hugo builds:
 
 - Hugo `0.128.0`, the declared minimum.
-- Hugo `0.164.0`, the upper tested version.
+- Hugo `0.166.0`, the upper tested version and current Hugo Themes builder version.
 
 The `Required checks` job succeeds only when the complete build matrix and the documentation/accessibility job pass. The quality job runs Markdown lint, documentation link checks, ShellCheck, release-validator tests, and Lighthouse accessibility audits with a minimum score of `0.95` on every audited route.
 

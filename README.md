@@ -6,7 +6,7 @@ A dark, terminal-inspired Hugo theme for technical blogs, project portfolios, an
 
 Termfolio presents static content through a filesystem-inspired interface. It combines shell prompts and file-list navigation with layouts for long-form writing, structured project metadata, locally hosted fonts, and privacy-conscious defaults.
 
-![Termfolio example site walkthrough](static/images/termfolio-example.gif)
+![Termfolio example site walkthrough](https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/termfolio-example.gif)
 
 [Live demo](https://joe-mccarthy.github.io/termfolio/) · [Screenshots](#screenshots) · [Quick start](#quick-start) · [Documentation](#documentation) · [Releases](https://github.com/joe-mccarthy/termfolio/releases)
 
@@ -27,11 +27,11 @@ Termfolio presents static content through a filesystem-inspired interface. It co
 
 | Home | Post |
 | --- | --- |
-| <img src="static/images/screenshots/home.png" alt="Termfolio homepage screenshot" width="420"> | <img src="static/images/screenshots/post.png" alt="Termfolio post screenshot" width="420"> |
+| <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/home.png" alt="Termfolio homepage screenshot" width="420"> | <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/post.png" alt="Termfolio post screenshot" width="420"> |
 
 | Projects | Search |
 | --- | --- |
-| <img src="static/images/screenshots/projects.png" alt="Termfolio projects screenshot" width="420"> | <img src="static/images/screenshots/search.png" alt="Termfolio search screenshot" width="420"> |
+| <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/projects.png" alt="Termfolio projects screenshot" width="420"> | <img src="https://raw.githubusercontent.com/joe-mccarthy/termfolio/main/static/images/screenshots/search.png" alt="Termfolio search screenshot" width="420"> |
 
 ## Requirements
 

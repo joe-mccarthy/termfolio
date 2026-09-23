@@ -12,8 +12,6 @@ license: "MIT"
 role: "Frontend build"
 impact: "Faster repair triage"
 stack: ["Hugo", "Alpine.js", "CSV"]
-demo: "https://example.org/projects/beacon-desk"
-repo: "https://example.org/repos/beacon-desk"
 ---
 
 ## Problem

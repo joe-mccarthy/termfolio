@@ -12,8 +12,6 @@ license: "MIT"
 role: "Full build"
 impact: "Energy patterns in context"
 stack: ["Hugo", "Charts CSS", "YAML"]
-demo: "https://example.org/projects/lumen-ledger"
-repo: "https://example.org/repos/lumen-ledger"
 ---
 
 ## Problem

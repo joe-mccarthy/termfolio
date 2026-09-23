@@ -21,6 +21,8 @@ The detailed policy is in [RELEASING.md](../RELEASING.md).
 - [ ] Confirm home, posts, projects, taxonomies, search, and error pages render.
 - [ ] Confirm the supported standard Hugo versions build with warnings treated
       as errors.
+- [ ] Confirm the current Hugo Themes builder version builds with warnings
+      treated as errors.
 
 ## Documentation and release writing
 
@@ -38,6 +40,7 @@ The detailed policy is in [RELEASING.md](../RELEASING.md).
 - [ ] Regenerate `images/screenshot.png` and `images/tn.png` after gallery-preview
       changes.
 - [ ] Verify all committed images render in GitHub's README view.
+- [ ] Verify README images use absolute URLs for Hugo Themes compatibility.
 
 ## Publication approval
 
@@ -60,3 +63,4 @@ The detailed policy is in [RELEASING.md](../RELEASING.md).
       verified.
 - [ ] Submit the theme to `gohugoio/hugoThemesSiteBuilder` if it is not listed.
 - [ ] Confirm the upstream preview succeeds before considering submission done.
+- [ ] Confirm the gallery uses the intended latest stable release.

@@ -21,7 +21,7 @@ body:
     attributes:
       label: Hugo version
       description: Run `hugo version` and paste the complete output.
-      placeholder: "hugo v0.164.0 linux/amd64"
+      placeholder: "hugo v0.166.0 linux/amd64"
     validations:
       required: true
   - type: input

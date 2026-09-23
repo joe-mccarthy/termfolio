@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-09-23
+
+### Changed
+
+- Updated continuous integration and example deployment to validate standard
+  Hugo `0.166.0`, matching the current Hugo Themes site builder.
+- Updated development tooling to patched dependency versions.
+- Improved gallery metadata with consistent title capitalization and additional
+  discovery tags.
+- Made README media URLs compatible with rendering on the Hugo Themes site.
+
+### Fixed
+
+- Removed placeholder project actions from the example site so its rendered
+  pages no longer advertise intentionally broken external links.
+
 ## [1.0.2] - 2026-07-21
 
 ### Added

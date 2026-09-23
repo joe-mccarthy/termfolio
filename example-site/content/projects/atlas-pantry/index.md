@@ -12,8 +12,6 @@ license: "MIT"
 role: "Product design"
 impact: "Shared kitchen planning"
 stack: ["Hugo", "SQLite", "Service workers"]
-demo: "https://example.org/projects/atlas-pantry"
-repo: "https://example.org/repos/atlas-pantry"
 ---
 
 ## Problem

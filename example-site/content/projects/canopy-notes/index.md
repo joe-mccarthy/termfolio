@@ -12,8 +12,6 @@ license: "MIT"
 role: "Content model"
 impact: "Survey notes to maps"
 stack: ["Hugo", "Markdown", "GeoJSON"]
-demo: "https://example.org/projects/canopy-notes"
-repo: "https://example.org/repos/canopy-notes"
 ---
 
 ## Problem

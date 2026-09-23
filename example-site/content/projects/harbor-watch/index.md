@@ -12,8 +12,6 @@ license: "MIT"
 role: "Dashboard design"
 impact: "Calmer operations checks"
 stack: ["Go", "MQTT", "Hugo"]
-demo: "https://example.org/projects/harbor-watch"
-repo: "https://example.org/repos/harbor-watch"
 ---
 
 ## Problem
